@@ -1,10 +1,17 @@
 import React from "react";
 import waldoPic from "../imgs/waldo.jpeg";
 
-const GameContainer = () => {
+//add padding on the div and not on the image
+
+const GameContainer = ({ getCoords }) => {
   return (
     <div>
-      <img srcSet={waldoPic} src={waldoPic} alt="waldo" />
+      <img
+        onClick={getCoords}
+        src={waldoPic}
+        alt="waldo"
+        style={{ width: "100%" }}
+      />
     </div>
   );
 };
