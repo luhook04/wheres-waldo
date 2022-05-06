@@ -6,6 +6,7 @@ import waldoPic from "../imgs/waldo.jpeg";
 const GameContainer = ({ getCoords }) => {
   return (
     <div>
+      <Selector />
       <img
         onClick={getCoords}
         src={waldoPic}
