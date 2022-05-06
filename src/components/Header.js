@@ -1,7 +1,7 @@
 import React from "react";
 import GameStats from "./GameStats";
 
-const Header = () => {
+const Header = ({ remainingCharacters }) => {
   return (
     <div>
       <h1>Where's Waldo?</h1>

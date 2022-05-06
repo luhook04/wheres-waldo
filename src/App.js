@@ -42,8 +42,11 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
-      <GameContainer getCoords={getCoords} />
+      <Header remainingCharacters={remainingCharacters} />
+      <GameContainer
+        getCoords={getCoords}
+        remainingCharacters={remainingCharacters}
+      />
       <StartGameModal />
     </div>
   );

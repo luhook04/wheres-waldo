@@ -1,5 +1,5 @@
 import React from "react";
 
-const Selector = () => {
-	return()
-}
+const Selector = ({ remaingingCharacters }) => {};
+
+export default Selector;
