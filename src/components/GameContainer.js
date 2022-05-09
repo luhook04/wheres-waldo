@@ -1,12 +1,13 @@
 import React from "react";
 import waldoPic from "../imgs/waldo.jpeg";
+// import Selector from "./Selector";
 
 //add padding on the div and not on the image
 
 const GameContainer = ({ getCoords, remainingCharacters }) => {
   return (
     <div>
-      <Selector remainingCharacters={remainingCharacters} />
+      {/* <Selector remainingCharacters={remainingCharacters} /> */}
       <img
         onClick={getCoords}
         src={waldoPic}

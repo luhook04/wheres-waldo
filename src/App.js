@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import StartGameModal from "./components/StartGameModal";
 import Header from "./components/Header";
 import GameContainer from "./components/GameContainer";
-import { odlawPic } from "./imgs/odlaw.jpeg";
-import { waldoPic } from "./imgs/waldocharacter.webp";
-import { wendaPic } from "./imgs/wenda.webp";
-import { whiteBeardPic } from "./imgs/whitebear.webp";
+import odlawPic from "./imgs/odlaw.jpeg";
+import waldoPic from "./imgs/waldocharacter.webp";
+import wendaPic from "./imgs/wenda.webp";
+import whiteBeardPic from "./imgs/whitebeard.webp";
 
 const App = () => {
   const [ mousePosition, setMousePosition ] = useState({ x: 0, y: 0 });
