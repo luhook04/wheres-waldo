@@ -44,7 +44,7 @@ const App = () => {
     setMousePosition({ x: xCoords, y: yCoords });
   };
 
-  const toggleModal = (e) => {
+  const getModalInfo = (e) => {
     setmodalInformation({
       x    : e.pageX,
       y    : e.pageY,
@@ -53,9 +53,13 @@ const App = () => {
   };
 
   const handleClick = (e) => {
-    toggleModal(e);
+    getModalInfo(e);
     getCoords(e);
-    console.dir(e.target.parentNode.children[0]);
+  };
+
+  const toggleModal = (e) => {
+    modalInformation.show = !modalInformation.show;
+    setmodalInformation({ ...modalInformation });
   };
 
   return (

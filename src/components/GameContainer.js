@@ -11,7 +11,7 @@ const GameContainer = ({
   mousePosition
 }) => {
   return (
-    <div>
+    <div className="image-container">
       <Selector
         modalInformation={modalInformation}
         remainingCharacters={remainingCharacters}
