@@ -18,6 +18,7 @@ const GameContainer = ({
         mousePosition={mousePosition}
       />
       <img
+        className="gameboard"
         onClick={handleClick}
         src={waldoPic}
         alt="waldo"

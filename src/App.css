@@ -16,3 +16,15 @@
 .image-container {
   padding: 10px;
 }
+
+.selection:hover {
+  background-color: aqua;
+}
+
+.selection {
+  border: 1px solid black;
+}
+
+.gameboard {
+  cursor: url('./imgs/custom-cursor.svg') 50 50, auto;
+}
