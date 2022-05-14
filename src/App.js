@@ -22,6 +22,8 @@ import {
 import { db } from "./firebase/firebase.config";
 
 const App = () => {
+  const [ gameStart, setGameStart ] = useState(false);
+  const [ gameEnd, setGameEnd ] = useState(false);
   const [ mousePosition, setMousePosition ] = useState({ x: 0, y: 0 });
   const [ modalInformation, setmodalInformation ] = useState({
     x    : 0,
