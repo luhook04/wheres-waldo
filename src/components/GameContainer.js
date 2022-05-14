@@ -8,7 +8,8 @@ const GameContainer = ({
   handleClick,
   remainingCharacters,
   modalInformation,
-  mousePosition
+  mousePosition,
+  checkPosition
 }) => {
   return (
     <div className="image-container">
@@ -16,6 +17,7 @@ const GameContainer = ({
         modalInformation={modalInformation}
         remainingCharacters={remainingCharacters}
         mousePosition={mousePosition}
+        checkPosition={checkPosition}
       />
       <img
         className="gameboard"

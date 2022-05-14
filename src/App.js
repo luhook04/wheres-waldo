@@ -7,6 +7,19 @@ import odlawPic from "./imgs/odlaw.jpeg";
 import waldoPic from "./imgs/waldocharacter.webp";
 import wendaPic from "./imgs/wenda.webp";
 import whiteBeardPic from "./imgs/whitebeard.webp";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  serverTimestamp,
+  doc,
+  updateDoc,
+  getDoc,
+  query,
+  where,
+  getDocs
+} from "firebase/firestore";
+import { db } from "./firebase/firebase.config";
 
 const App = () => {
   const [ mousePosition, setMousePosition ] = useState({ x: 0, y: 0 });
@@ -36,7 +49,7 @@ const App = () => {
   ]);
 
   const characterPos = {
-    waldo : "SzcX1kUhIspzXiLf0m0D"
+    Waldo : "SzcX1kUhIspzXiLf0m0D"
   };
 
   const getCoords = (e) => {
@@ -61,14 +74,28 @@ const App = () => {
     getCoords(e);
   };
 
-  const toggleModal = (e) => {
+  const toggleModal = () => {
     modalInformation.show = !modalInformation.show;
     setmodalInformation({ ...modalInformation });
   };
 
   const makeMove = () => {};
 
-  const checkPosition = () => {};
+  const checkPosition = async (e) => {
+    const name = e.target.firstChild.textContent;
+    const characterId = characterPos[name];
+    const characterRef = doc(db, "locations", characterId);
+    const charSnap = await getDoc(characterRef);
+    const [ x, y ] = [
+      charSnap.data()["x-cord"],
+      charSnap.data()["y-cord"]
+    ];
+    if (x === mousePosition.x && y === mousePosition.y) {
+      toggleModal();
+      console.log("you found waldo");
+    }
+    else return toggleModal();
+  };
 
   return (
     <div className="App">
@@ -78,6 +105,7 @@ const App = () => {
         remainingCharacters={remainingCharacters}
         modalInformation={modalInformation}
         mousePosition={mousePosition}
+        checkPosition={checkPosition}
       />
       <StartGameModal />
     </div>

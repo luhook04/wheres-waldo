@@ -3,11 +3,12 @@ import React from "react";
 const Selector = ({
   remainingCharacters,
   modalInformation,
-  mousePosition
+  mousePosition,
+  checkPosition
 }) => {
   const selectOptions = remainingCharacters.map((survivor, index) => {
     return (
-      <div className="selection" key={index}>
+      <div className="selection" key={index} onClick={checkPosition}>
         <h3>{survivor.name}</h3>
       </div>
     );
