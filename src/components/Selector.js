@@ -8,7 +8,7 @@ const Selector = ({
   const selectOptions = remainingCharacters.map((survivor, index) => {
     return (
       <div className="selection" key={index}>
-        <p>{survivor.name}</p>
+        <h3>{survivor.name}</h3>
       </div>
     );
   });

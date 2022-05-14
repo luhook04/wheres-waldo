@@ -35,6 +35,10 @@ const App = () => {
     }
   ]);
 
+  const characterPos = {
+    waldo : "SzcX1kUhIspzXiLf0m0D"
+  };
+
   const getCoords = (e) => {
     const { width, height } = e.target.getBoundingClientRect();
     const { offsetX, offsetY } = e.nativeEvent;
@@ -61,6 +65,10 @@ const App = () => {
     modalInformation.show = !modalInformation.show;
     setmodalInformation({ ...modalInformation });
   };
+
+  const makeMove = () => {};
+
+  const checkPosition = () => {};
 
   return (
     <div className="App">
