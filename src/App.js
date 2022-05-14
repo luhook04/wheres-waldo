@@ -90,11 +90,24 @@ const App = () => {
       charSnap.data()["x-cord"],
       charSnap.data()["y-cord"]
     ];
-    if (x === mousePosition.x && y === mousePosition.y) {
-      toggleModal();
-      console.log("you found waldo");
-    }
-    else return toggleModal();
+    isInArea(x, y) ? foundCharacter() : wrongSelection();
+  };
+
+  const isInArea = (userX, userY) => {
+    const distance = Math.sqrt(
+      (mousePosition.x - userX) ** 2 + (mousePosition.y - userY) ** 2
+    );
+    return distance < 8 ? true : false;
+  };
+
+  const foundCharacter = () => {
+    toggleModal();
+    console.log("You found him dickwad");
+  };
+
+  const wrongSelection = () => {
+    toggleModal();
+    console.log("Not there idiot");
   };
 
   return (
