@@ -49,7 +49,10 @@ const App = () => {
   ]);
 
   const characterPos = {
-    Waldo : "SzcX1kUhIspzXiLf0m0D"
+    Waldo      : "SzcX1kUhIspzXiLf0m0D",
+    Odlaw      : "xQSTsPX254yZr1ewpWoU",
+    Wenda      : "Phpjg7dfgLQnzaylEnL4",
+    Whitebeard : "GLodc7DOiU3qd0nMroYg"
   };
 
   const getCoords = (e) => {
@@ -102,7 +105,7 @@ const App = () => {
 
   const foundCharacter = () => {
     toggleModal();
-    console.log("You found him dickwad");
+    console.log("You found him");
   };
 
   const wrongSelection = () => {
