@@ -4,9 +4,9 @@ import StartGameModal from "./components/StartGameModal";
 import Header from "./components/Header";
 import GameContainer from "./components/GameContainer";
 import odlawPic from "./imgs/odlaw.jpeg";
-import waldoPic from "./imgs/waldocharacter.webp";
-import wendaPic from "./imgs/wenda.webp";
-import whiteBeardPic from "./imgs/whitebeard.webp";
+import waldoPic from "./imgs/waldocharacter.jpeg";
+import wendaPic from "./imgs/wenda.jpeg";
+import whiteBeardPic from "./imgs/whitebeard.jpeg";
 import {
   getFirestore,
   addDoc,
@@ -90,10 +90,10 @@ const App = () => {
     const name = e.target.firstChild.textContent;
     const characterId = characterPos[name];
     const characterRef = doc(db, "locations", characterId);
-    const charSnap = await getDoc(characterRef);
+    const charSnapshot = await getDoc(characterRef);
     const [ x, y ] = [
-      charSnap.data()["x-cord"],
-      charSnap.data()["y-cord"]
+      charSnapshot.data()["x-cord"],
+      charSnapshot.data()["y-cord"]
     ];
     isInArea(x, y) ? foundCharacter(name) : wrongSelection();
   };

@@ -3,6 +3,12 @@ import App from "./App";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
+const remainingCharacters = [
+  { name: "Waldo" },
+  { name: "Wenda" },
+  { name: "Whitebeard" }
+];
+
 describe("App", () => {
   it("toggles selection menu on image click", () => {
     render(<App />);

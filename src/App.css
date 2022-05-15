@@ -28,3 +28,25 @@
 .gameboard {
   cursor: url('./imgs/custom-cursor.svg') 50 50, auto;
 }
+
+.character-container {
+  display: flex;
+  width: 25%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.character-container img {
+  padding-top: 20px;
+  width: 50%;
+  height: 50%;
+}
+
+.remaining-character-grid {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  width: 40%;
+  display: flex;
+}
