@@ -95,18 +95,22 @@ const App = () => {
       charSnap.data()["x-cord"],
       charSnap.data()["y-cord"]
     ];
-    isInArea(x, y) ? foundCharacter() : wrongSelection();
+    isInArea(x, y) ? foundCharacter(name) : wrongSelection();
   };
 
-  const isInArea = (userX, userY) => {
+  const isInArea = (xCord, yCord) => {
     const distance = Math.sqrt(
-      (mousePosition.x - userX) ** 2 + (mousePosition.y - userY) ** 2
+      (mousePosition.x - xCord) ** 2 + (mousePosition.y - yCord) ** 2
     );
     return distance < 8 ? true : false;
   };
 
-  const foundCharacter = () => {
+  const foundCharacter = (character) => {
+    const newArray = remainingCharacters.filter((obj) => {
+      return obj.name !== character;
+    });
     toggleModal();
+    setRemainingCharacters(newArray);
     console.log("You found him");
   };
 
