@@ -1,10 +1,10 @@
 import React from "react";
 
-const StartGameModal = () => {
+const StartGameModal = ({ startGame }) => {
   return (
     <div>
       <p>Find all the characters as quickly as you can!</p>
-      <button>Start</button>
+      <button onClick={startGame}>Start</button>
     </div>
   );
 };

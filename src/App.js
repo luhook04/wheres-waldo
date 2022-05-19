@@ -84,8 +84,6 @@ const App = () => {
     setmodalInformation({ ...modalInformation });
   };
 
-  const makeMove = () => {};
-
   const checkPosition = async (e) => {
     const name = e.target.firstChild.textContent;
     const characterId = characterPos[name];
@@ -119,9 +117,15 @@ const App = () => {
     console.log("Not there idiot");
   };
 
+  const startGame = () => {
+    setGameStart(!gameStart);
+    console.log(gameStart);
+  };
+
   return (
     <div className="App">
       <Header remainingCharacters={remainingCharacters} />
+      <StartGameModal startGame={startGame} />
       <GameContainer
         handleClick={handleClick}
         remainingCharacters={remainingCharacters}
@@ -129,7 +133,6 @@ const App = () => {
         mousePosition={mousePosition}
         checkPosition={checkPosition}
       />
-      <StartGameModal />
     </div>
   );
 };
