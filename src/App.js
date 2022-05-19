@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import StartGameModal from "./components/StartGameModal";
 import Header from "./components/Header";
@@ -7,6 +7,7 @@ import odlawPic from "./imgs/odlaw.jpeg";
 import waldoPic from "./imgs/waldocharacter.jpeg";
 import wendaPic from "./imgs/wenda.jpeg";
 import whiteBeardPic from "./imgs/whitebeard.jpeg";
+
 import {
   getFirestore,
   addDoc,
@@ -23,6 +24,10 @@ import { db } from "./firebase/firebase.config";
 
 const App = () => {
   const [ gameStart, setGameStart ] = useState(false);
+  const [ errorPopup, setErrorPopup ] = useState(false);
+  const [ errorMessage, setErrorMessage ] = useState("");
+  const [ successPopup, setSuccessPopup ] = useState(false);
+  const [ successMessage, setSuccessMessage ] = useState("");
   const [ gameEnd, setGameEnd ] = useState(false);
   const [ mousePosition, setMousePosition ] = useState({ x: 0, y: 0 });
   const [ modalInformation, setmodalInformation ] = useState({
@@ -57,6 +62,28 @@ const App = () => {
     Whitebeard : "GLodc7DOiU3qd0nMroYg"
   };
 
+  useEffect(
+    () => {
+      if (errorPopup) {
+        setTimeout(() => {
+          setErrorPopup(false);
+        }, 1000);
+      }
+    },
+    [ errorPopup ]
+  );
+
+  useEffect(
+    () => {
+      if (successPopup) {
+        setTimeout(() => {
+          setSuccessPopup(false);
+        }, 1000);
+      }
+    },
+    [ successPopup ]
+  );
+
   const getCoords = (e) => {
     const { width, height } = e.target.getBoundingClientRect();
     const { offsetX, offsetY } = e.nativeEvent;
@@ -84,6 +111,14 @@ const App = () => {
     setmodalInformation({ ...modalInformation });
   };
 
+  const toggleError = () => {
+    setErrorPopup(true);
+  };
+
+  const toggleSuccess = () => {
+    setSuccessPopup(true);
+  };
+
   const checkPosition = async (e) => {
     const name = e.target.firstChild.textContent;
     const characterId = characterPos[name];
@@ -93,7 +128,7 @@ const App = () => {
       charSnapshot.data()["x-cord"],
       charSnapshot.data()["y-cord"]
     ];
-    isInArea(x, y) ? foundCharacter(name) : wrongSelection();
+    isInArea(x, y) ? foundCharacter(name) : wrongSelection(name);
   };
 
   const isInArea = (xCord, yCord) => {
@@ -109,12 +144,14 @@ const App = () => {
     });
     toggleModal();
     setRemainingCharacters(newArray);
-    console.log("You found him");
+    setSuccessMessage(`You found ${character}!`);
+    toggleSuccess();
   };
 
-  const wrongSelection = () => {
+  const wrongSelection = (name) => {
     toggleModal();
-    console.log("Not there idiot");
+    setErrorMessage(`${name} is not there`);
+    toggleError();
   };
 
   const startGame = () => {
@@ -124,6 +161,22 @@ const App = () => {
   return (
     <div className="App">
       <Header remainingCharacters={remainingCharacters} />
+      {successPopup ? (
+        <div
+          style={{ top: modalInformation.y, left: modalInformation.x }}
+          className="feedback"
+        >
+          {successMessage}
+        </div>
+      ) : null}
+      {errorPopup ? (
+        <div
+          style={{ top: modalInformation.y, left: modalInformation.x }}
+          className="feedback"
+        >
+          {errorMessage}
+        </div>
+      ) : null}
       {!gameStart ? <StartGameModal startGame={startGame} /> : null}
       {gameStart ? (
         <GameContainer

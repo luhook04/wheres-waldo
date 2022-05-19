@@ -54,12 +54,14 @@
 }
 
 .start-modal {
+  color: rgba(255, 0, 0, 0.856);
+  font-weight: bolder;
   background-color: antiquewhite;
   width: 50%;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 10vw;
-  padding-bottom: 10vw;
+  padding-top: 5vw;
+  padding-bottom: 5vw;
   border-radius: 5px;
   box-shadow: 5px 10px 8px rgba(0, 0, 0, 0.734);
 }
@@ -90,4 +92,16 @@ body {
 
 .header-container {
   color: white;
+}
+
+.feedback {
+  position: absolute;
+  color: rgba(255, 0, 0, 0.856);
+  font-weight: 900;
+  background-color: white;
+  padding: 15px;
+  border-radius: 4px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }

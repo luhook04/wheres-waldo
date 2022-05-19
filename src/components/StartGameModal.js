@@ -3,7 +3,8 @@ import React from "react";
 const StartGameModal = ({ startGame }) => {
   return (
     <div className="start-modal">
-      <p>Find all the characters as quickly as you can!</p>
+      <h2>Find all the characters as quickly as you can!</h2>
+      <p>You will be timed when you click start</p>
       <button onClick={startGame}>Start</button>
     </div>
   );
