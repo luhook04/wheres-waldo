@@ -3,11 +3,11 @@ import "./App.css";
 import StartGameModal from "./components/StartGameModal";
 import Header from "./components/Header";
 import GameContainer from "./components/GameContainer";
+import Feedback from "./components/Feedback";
 import odlawPic from "./imgs/odlaw.jpeg";
 import waldoPic from "./imgs/waldocharacter.jpeg";
 import wendaPic from "./imgs/wenda.jpeg";
 import whiteBeardPic from "./imgs/whitebeard.jpeg";
-
 import {
   getFirestore,
   addDoc,
@@ -161,22 +161,14 @@ const App = () => {
   return (
     <div className="App">
       <Header remainingCharacters={remainingCharacters} />
-      {successPopup ? (
-        <div
-          style={{ top: modalInformation.y, left: modalInformation.x }}
-          className="feedback"
-        >
-          {successMessage}
-        </div>
-      ) : null}
-      {errorPopup ? (
-        <div
-          style={{ top: modalInformation.y, left: modalInformation.x }}
-          className="feedback"
-        >
-          {errorMessage}
-        </div>
-      ) : null}
+      <Feedback
+        successMessage={successMessage}
+        successPopup={successPopup}
+        errorMessage={errorMessage}
+        errorPopup={errorPopup}
+        modalInformation={modalInformation}
+        mousePosition={mousePosition}
+      />
       {!gameStart ? <StartGameModal startGame={startGame} /> : null}
       {gameStart ? (
         <GameContainer
