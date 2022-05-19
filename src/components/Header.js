@@ -11,7 +11,7 @@ const Header = ({ remainingCharacters }) => {
   });
 
   return (
-    <div>
+    <div className="header-container">
       <h1>Where's Waldo?</h1>
       <h3>Find Us!</h3>
       <div className="remaining-character-grid">{characterBoxes}</div>
