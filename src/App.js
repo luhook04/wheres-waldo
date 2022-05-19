@@ -125,7 +125,6 @@ const App = () => {
     <div className="App">
       <Header remainingCharacters={remainingCharacters} />
       {!gameStart ? <StartGameModal startGame={startGame} /> : null}
-
       {gameStart ? (
         <GameContainer
           handleClick={handleClick}
