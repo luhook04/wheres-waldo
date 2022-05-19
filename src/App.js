@@ -64,6 +64,16 @@ const App = () => {
 
   useEffect(
     () => {
+      if (remainingCharacters.length === 0) {
+        setGameEnd(true);
+        console.log("Game Over!");
+      }
+    },
+    [ remainingCharacters ]
+  );
+
+  useEffect(
+    () => {
       if (errorPopup) {
         setTimeout(() => {
           setErrorPopup(false);
