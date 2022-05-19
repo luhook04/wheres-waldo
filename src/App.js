@@ -119,20 +119,22 @@ const App = () => {
 
   const startGame = () => {
     setGameStart(!gameStart);
-    console.log(gameStart);
   };
 
   return (
     <div className="App">
       <Header remainingCharacters={remainingCharacters} />
-      <StartGameModal startGame={startGame} />
-      <GameContainer
-        handleClick={handleClick}
-        remainingCharacters={remainingCharacters}
-        modalInformation={modalInformation}
-        mousePosition={mousePosition}
-        checkPosition={checkPosition}
-      />
+      {!gameStart ? <StartGameModal startGame={startGame} /> : null}
+
+      {gameStart ? (
+        <GameContainer
+          handleClick={handleClick}
+          remainingCharacters={remainingCharacters}
+          modalInformation={modalInformation}
+          mousePosition={mousePosition}
+          checkPosition={checkPosition}
+        />
+      ) : null}
     </div>
   );
 };
