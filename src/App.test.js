@@ -10,9 +10,27 @@ const remainingCharacters = [
 ];
 
 describe("App", () => {
+  it("renders board on start button click", () => {
+    render(<App />);
+
+    expect(screen.queryByAltText("waldo-board")).not.toBeInTheDocument();
+    const button = screen.getByRole("button", { name: "Start" });
+    expect(button).toBeInTheDocument();
+
+    userEvent.click(button);
+
+    expect(screen.getByAltText("waldo-board")).toBeInTheDocument();
+    expect(button).not.toBeInTheDocument();
+  });
+
   it("toggles selection menu on image click", () => {
     render(<App />);
-    const image = screen.getByRole("img");
+
+    const button = screen.getByRole("button", { name: "Start" });
+
+    userEvent.click(button);
+
+    const image = screen.getByAltText("waldo-board");
 
     expect(
       screen.queryByRole("heading", { name: "Waldo" }, { level: 3 })

@@ -15,6 +15,7 @@
 
 .image-container {
   padding: 10px;
+  padding-bottom: 100px;
 }
 
 .selection:hover {

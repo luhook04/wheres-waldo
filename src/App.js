@@ -35,7 +35,9 @@ const App = () => {
     y    : 0,
     show : false
   });
-  const [ characterInfo, setCharacterInfo ] = useState({});
+
+  const [ userName, setUserName ] = useState("");
+
   const [ remainingCharacters, setRemainingCharacters ] = useState([
     {
       name  : "Waldo",
@@ -93,6 +95,10 @@ const App = () => {
     },
     [ successPopup ]
   );
+
+  const updateName = (e) => {
+    setUserName(e.target.textContent);
+  };
 
   const getCoords = (e) => {
     const { width, height } = e.target.getBoundingClientRect();

@@ -21,7 +21,7 @@ const GameContainer = ({
         className="gameboard"
         onClick={handleClick}
         src={waldoPic}
-        alt="waldo"
+        alt="waldo-board"
         style={{ width: "100%" }}
       />
     </div>
