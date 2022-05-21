@@ -171,8 +171,8 @@ const App = () => {
   };
 
   const startGame = () => {
-    if (username.length < 3) {
-      alert("You must enter a username with 3 or more letters");
+    if (username.length < 3 || username.length > 15) {
+      alert("You must enter a username between 3-15 letters");
       return;
     }
     setGameStart(!gameStart);
