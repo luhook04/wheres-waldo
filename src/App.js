@@ -36,7 +36,7 @@ const App = () => {
     show : false
   });
 
-  const [ userName, setUserName ] = useState("");
+  const [ username, setUsername ] = useState("");
 
   const [ remainingCharacters, setRemainingCharacters ] = useState([
     {
@@ -97,7 +97,7 @@ const App = () => {
   );
 
   const updateName = (e) => {
-    setUserName(e.target.textContent);
+    setUsername(e.target.value);
   };
 
   const getCoords = (e) => {
@@ -171,6 +171,10 @@ const App = () => {
   };
 
   const startGame = () => {
+    if (username.length < 3) {
+      alert("You must enter a username with 3 or more letters");
+      return;
+    }
     setGameStart(!gameStart);
   };
 
@@ -185,7 +189,9 @@ const App = () => {
         modalInformation={modalInformation}
         mousePosition={mousePosition}
       />
-      {!gameStart ? <StartGameModal startGame={startGame} /> : null}
+      {!gameStart ? (
+        <StartGameModal startGame={startGame} updateName={updateName} />
+      ) : null}
       {gameStart ? (
         <GameContainer
           handleClick={handleClick}
