@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import StartGameModal from "./components/StartGameModal";
+import EndGameModal from "./components/EndGameModal";
 import Header from "./components/Header";
 import GameContainer from "./components/GameContainer";
 import Feedback from "./components/Feedback";
@@ -21,14 +22,15 @@ import {
   getDocs
 } from "firebase/firestore";
 import { db } from "./firebase/firebase.config";
-import { async } from "@firebase/util";
 
 const App = () => {
   const [ gameStart, setGameStart ] = useState(false);
+  const [ endGameModal, setEndGameModal ] = useState(false);
   const [ errorPopup, setErrorPopup ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState("");
   const [ successPopup, setSuccessPopup ] = useState(false);
   const [ successMessage, setSuccessMessage ] = useState("");
+  const [ username, setUsername ] = useState("");
   const [ userId, setUserId ] = useState("");
   const [ gameResult, setGameResult ] = useState();
   const [ mousePosition, setMousePosition ] = useState({ x: 0, y: 0 });
@@ -37,9 +39,6 @@ const App = () => {
     y    : 0,
     show : false
   });
-
-  const [ username, setUsername ] = useState("");
-
   const [ remainingCharacters, setRemainingCharacters ] = useState([
     {
       name  : "Waldo",
@@ -210,9 +209,8 @@ const App = () => {
     const { startTime, endTime, username } = userDoc;
     const secondsTaken = Math.round(endTime - startTime);
     setGameResult({ username, secondsTaken });
-    console.log(startTime);
-    console.log(endTime);
-    console.log(secondsTaken);
+    setEndGameModal(true);
+    alert(`You finished in ${secondsTaken} seconds!`);
   };
 
   return (
@@ -238,6 +236,7 @@ const App = () => {
           checkPosition={checkPosition}
         />
       ) : null}
+      {endGameModal ? <EndGameModal gameResult={gameResult} /> : null}
     </div>
   );
 };

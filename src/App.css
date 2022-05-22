@@ -19,11 +19,12 @@
 }
 
 .selection:hover {
-  background-color: aqua;
+  background-color: rgba(255, 0, 0, 0.713);
+  color: white;
 }
 
 .selection {
-  border: 1px solid black;
+  border: 1px solid rgba(255, 0, 0, 0.856);
 }
 
 .gameboard {
@@ -115,4 +116,8 @@ input[type=text] {
 
 input[type=text]:focus {
   border: 2px solid rgba(255, 0, 0, 0.713);
+}
+
+.end-container {
+  color: white;
 }
