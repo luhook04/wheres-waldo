@@ -67,12 +67,32 @@ const App = () => {
 
   useEffect(
     () => {
+      const endGame = async () => {
+        await setEndTime();
+        const userRef = doc(db, "timing", userId);
+        const userDoc = await getDoc(userRef).then((res) => res.data());
+        const { startTime, endTime, username } = userDoc;
+        const secondsTaken = Math.round(endTime - startTime);
+        setGameResult({ username, secondsTaken });
+        setEndGameModal(true);
+        alert(`You finished in ${secondsTaken} seconds!`);
+      };
+
+      const setEndTime = async () => {
+        const userRef = doc(db, "timing", userId);
+        await updateDoc(userRef, {
+          endTime : serverTimestamp()
+        })
+          .then(() => console.log("woo"))
+          .catch((err) => console.log(err));
+      };
+
       if (remainingCharacters.length === 0) {
         console.log("Game Over!");
         endGame();
       }
     },
-    [ remainingCharacters ]
+    [ remainingCharacters, userId ]
   );
 
   useEffect(
@@ -180,15 +200,6 @@ const App = () => {
     timeUser();
   };
 
-  const setEndTime = async () => {
-    const userRef = doc(db, "timing", userId);
-    await updateDoc(userRef, {
-      endTime : serverTimestamp()
-    })
-      .then(() => console.log("woo"))
-      .catch((err) => console.log(err));
-  };
-
   const timeUser = async () => {
     addDoc(collection(db, "timing"), {
       username  : username,
@@ -200,17 +211,6 @@ const App = () => {
         console.log("timer started");
       })
       .catch((err) => console.log(err));
-  };
-
-  const endGame = async () => {
-    await setEndTime();
-    const userRef = doc(db, "timing", userId);
-    const userDoc = await getDoc(userRef).then((res) => res.data());
-    const { startTime, endTime, username } = userDoc;
-    const secondsTaken = Math.round(endTime - startTime);
-    setGameResult({ username, secondsTaken });
-    setEndGameModal(true);
-    alert(`You finished in ${secondsTaken} seconds!`);
   };
 
   return (
@@ -227,7 +227,7 @@ const App = () => {
       {!gameStart ? (
         <StartGameModal startGame={startGame} updateName={updateName} />
       ) : null}
-      {gameStart ? (
+      {gameStart && !endGameModal ? (
         <GameContainer
           handleClick={handleClick}
           remainingCharacters={remainingCharacters}
