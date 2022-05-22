@@ -21,6 +21,7 @@ import {
   getDocs
 } from "firebase/firestore";
 import { db } from "./firebase/firebase.config";
+import { async } from "@firebase/util";
 
 const App = () => {
   const [ gameStart, setGameStart ] = useState(false);
@@ -28,7 +29,8 @@ const App = () => {
   const [ errorMessage, setErrorMessage ] = useState("");
   const [ successPopup, setSuccessPopup ] = useState(false);
   const [ successMessage, setSuccessMessage ] = useState("");
-  const [ gameEnd, setGameEnd ] = useState(false);
+  const [ userId, setUserId ] = useState("");
+  const [ gameResult, setGameResult ] = useState();
   const [ mousePosition, setMousePosition ] = useState({ x: 0, y: 0 });
   const [ modalInformation, setmodalInformation ] = useState({
     x    : 0,
@@ -67,8 +69,8 @@ const App = () => {
   useEffect(
     () => {
       if (remainingCharacters.length === 0) {
-        setGameEnd(true);
         console.log("Game Over!");
+        endGame();
       }
     },
     [ remainingCharacters ]
@@ -176,6 +178,41 @@ const App = () => {
       return;
     }
     setGameStart(!gameStart);
+    timeUser();
+  };
+
+  const setEndTime = async () => {
+    const userRef = doc(db, "timing", userId);
+    await updateDoc(userRef, {
+      endTime : serverTimestamp()
+    })
+      .then(() => console.log("woo"))
+      .catch((err) => console.log(err));
+  };
+
+  const timeUser = async () => {
+    addDoc(collection(db, "timing"), {
+      username  : username,
+      startTime : serverTimestamp(),
+      endTime   : null
+    })
+      .then((res) => {
+        setUserId(res.id);
+        console.log("timer started");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const endGame = async () => {
+    await setEndTime();
+    const userRef = doc(db, "timing", userId);
+    const userDoc = await getDoc(userRef).then((res) => res.data());
+    const { startTime, endTime, username } = userDoc;
+    const secondsTaken = Math.round(endTime - startTime);
+    setGameResult({ username, secondsTaken });
+    console.log(startTime);
+    console.log(endTime);
+    console.log(secondsTaken);
   };
 
   return (
