@@ -4,22 +4,19 @@ import StartGameModal from "./components/StartGameModal";
 import EndGameModal from "./components/EndGameModal";
 import Header from "./components/Header";
 import GameContainer from "./components/GameContainer";
+import Leaderboard from "./components/Leaderboard";
 import Feedback from "./components/Feedback";
 import odlawPic from "./imgs/odlaw.jpeg";
 import waldoPic from "./imgs/waldocharacter.jpeg";
 import wendaPic from "./imgs/wenda.jpeg";
 import whiteBeardPic from "./imgs/whitebeard.jpeg";
 import {
-  getFirestore,
   addDoc,
   collection,
   serverTimestamp,
   doc,
   updateDoc,
-  getDoc,
-  query,
-  where,
-  getDocs
+  getDoc
 } from "firebase/firestore";
 import { db } from "./firebase/firebase.config";
 
@@ -69,6 +66,7 @@ const App = () => {
     () => {
       const endGame = async () => {
         await setEndTime();
+
         const userRef = doc(db, "timing", userId);
         const userDoc = await getDoc(userRef).then((res) => res.data());
         const { startTime, endTime, username } = userDoc;
@@ -237,6 +235,7 @@ const App = () => {
         />
       ) : null}
       {endGameModal ? <EndGameModal gameResult={gameResult} /> : null}
+      <Leaderboard />
     </div>
   );
 };
