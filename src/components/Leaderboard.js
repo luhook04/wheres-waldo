@@ -1,21 +1,14 @@
 import { useEffect, useState } from "react";
-import {
-  query,
-  collection,
-  limit,
-  where,
-  getDocs
-} from "firebase/firestore";
+import { query, collection, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase.config";
 
-const Leaderboard = ({ handleHomeClick }) => {
+const Leaderboard = ({ resetGame }) => {
   const [ leaderboard, setLeaderboard ] = useState([]);
 
   useEffect(() => {
     const getLeaderboard = async () => {
       const resultsRef = query(
         collection(db, "timing"),
-        limit(10),
         where("endTime", "!=", null)
       );
       const resultDocs = await getDocs(resultsRef);
@@ -27,9 +20,11 @@ const Leaderboard = ({ handleHomeClick }) => {
           timeTaken : (endTime - startTime).toFixed(2)
         });
       });
-      const topTenArray = resultsArray.sort(
+      const timesArray = resultsArray.sort(
         (a, b) => a.timeTaken - b.timeTaken
       );
+
+      const topTenArray = timesArray.slice(0, 10);
 
       setLeaderboard(topTenArray);
     };
@@ -58,7 +53,7 @@ const Leaderboard = ({ handleHomeClick }) => {
           })}
         </tbody>
       </table>
-      <button onClick={handleHomeClick}>Home</button>
+      <button onClick={resetGame}>Home</button>
     </div>
   );
 };

@@ -76,7 +76,6 @@ const App = () => {
         setGameResult({ username, secondsTaken });
         setEndGameModal(true);
         setStartGame(false);
-        alert(`You finished in ${secondsTaken} seconds!`);
       };
 
       const setEndTime = async () => {
@@ -120,6 +119,31 @@ const App = () => {
 
   const updateName = (e) => {
     setUsername(e.target.value);
+  };
+
+  const resetGame = () => {
+    setUserId("");
+    setGameResult();
+    setUsername("");
+    setRemainingCharacters([
+      {
+        name  : "Waldo",
+        image : waldoPic
+      },
+      {
+        name  : "Odlaw",
+        image : odlawPic
+      },
+      {
+        name  : "Wenda",
+        image : wendaPic
+      },
+      {
+        name  : "Whitebeard",
+        image : whiteBeardPic
+      }
+    ]);
+    handleHomeClick();
   };
 
   const getCoords = (e) => {
@@ -257,11 +281,12 @@ const App = () => {
         <EndGameModal
           gameResult={gameResult}
           handleHomeClick={handleHomeClick}
+          resetGame={resetGame}
         />
       ) : null}
       {showLeaderboard ? (
         <div className="leaderboard-container">
-          <Leaderboard handleHomeClick={handleHomeClick} />
+          <Leaderboard resetGame={resetGame} />
         </div>
       ) : null}
     </div>
