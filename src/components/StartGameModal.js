@@ -1,6 +1,10 @@
 import React from "react";
 
-const StartGameModal = ({ startGame, updateName }) => {
+const StartGameModal = ({
+  toggleStartGame,
+  updateName,
+  toggleLeaderboard
+}) => {
   return (
     <div className="start-modal">
       <label htmlFor="user-name">Username: </label>
@@ -8,8 +12,8 @@ const StartGameModal = ({ startGame, updateName }) => {
       <h2>Find all the characters as quickly as you can!</h2>
       <p>You will be timed when you click start</p>
       <div>
-        <button onClick={startGame}>Start</button>
-        <button>Leaderboard</button>
+        <button onClick={toggleStartGame}>Start</button>
+        <button onClick={toggleLeaderboard}>Leaderboard</button>
       </div>
     </div>
   );

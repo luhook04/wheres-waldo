@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebase.config";
 
-const Leaderboard = () => {
+const Leaderboard = ({ handleHomeClick }) => {
   const [ leaderboard, setLeaderboard ] = useState([]);
 
   useEffect(() => {
@@ -37,18 +37,28 @@ const Leaderboard = () => {
   }, []);
 
   return (
-    <div>
-      {leaderboard.map((data, index) => {
-        return (
-          <div key={index}>
-            <div>
-              <span>{index + 1}</span> {data.username}
-            </div>
-            <div>{data.timeTaken}</div>
-          </div>
-        );
-      })}
-      <button>Home</button>
+    <div className="leaderboard-data">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Time (seconds)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leaderboard.map((data, index) => {
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{data.username}</td>
+                <td>{data.timeTaken}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <button onClick={handleHomeClick}>Home</button>
     </div>
   );
 };

@@ -21,7 +21,9 @@ import {
 import { db } from "./firebase/firebase.config";
 
 const App = () => {
-  const [ gameStart, setGameStart ] = useState(false);
+  const [ showStartModal, setShowStartModal ] = useState(true);
+  const [ startGame, setStartGame ] = useState(false);
+  const [ showLeaderboard, setShowLeaderboard ] = useState(false);
   const [ endGameModal, setEndGameModal ] = useState(false);
   const [ errorPopup, setErrorPopup ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState("");
@@ -73,6 +75,7 @@ const App = () => {
         const secondsTaken = Math.round(endTime - startTime);
         setGameResult({ username, secondsTaken });
         setEndGameModal(true);
+        setStartGame(false);
         alert(`You finished in ${secondsTaken} seconds!`);
       };
 
@@ -141,6 +144,12 @@ const App = () => {
     getCoords(e);
   };
 
+  const handleHomeClick = () => {
+    setShowLeaderboard(false);
+    setEndGameModal(false);
+    setShowStartModal(true);
+  };
+
   const toggleModal = () => {
     modalInformation.show = !modalInformation.show;
     setmodalInformation({ ...modalInformation });
@@ -189,12 +198,13 @@ const App = () => {
     toggleError();
   };
 
-  const startGame = () => {
+  const toggleStartGame = () => {
     if (username.length < 3 || username.length > 15) {
       alert("You must enter a username between 3-15 letters");
       return;
     }
-    setGameStart(!gameStart);
+    setShowStartModal(!showStartModal);
+    setStartGame(true);
     timeUser();
   };
 
@@ -211,6 +221,11 @@ const App = () => {
       .catch((err) => console.log(err));
   };
 
+  const toggleLeaderboard = () => {
+    setShowStartModal(false);
+    setShowLeaderboard(!showLeaderboard);
+  };
+
   return (
     <div className="App">
       <Header remainingCharacters={remainingCharacters} />
@@ -222,10 +237,14 @@ const App = () => {
         modalInformation={modalInformation}
         mousePosition={mousePosition}
       />
-      {!gameStart ? (
-        <StartGameModal startGame={startGame} updateName={updateName} />
+      {showStartModal ? (
+        <StartGameModal
+          toggleStartGame={toggleStartGame}
+          updateName={updateName}
+          toggleLeaderboard={toggleLeaderboard}
+        />
       ) : null}
-      {gameStart && !endGameModal ? (
+      {startGame ? (
         <GameContainer
           handleClick={handleClick}
           remainingCharacters={remainingCharacters}
@@ -234,8 +253,17 @@ const App = () => {
           checkPosition={checkPosition}
         />
       ) : null}
-      {endGameModal ? <EndGameModal gameResult={gameResult} /> : null}
-      <Leaderboard />
+      {endGameModal ? (
+        <EndGameModal
+          gameResult={gameResult}
+          handleHomeClick={handleHomeClick}
+        />
+      ) : null}
+      {showLeaderboard ? (
+        <div className="leaderboard-container">
+          <Leaderboard handleHomeClick={handleHomeClick} />
+        </div>
+      ) : null}
     </div>
   );
 };
