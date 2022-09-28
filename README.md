@@ -9,8 +9,7 @@ I also used Firebase with this app because I wanted to be able to display the le
 Technology Used 
   - Firebase
   - React
-  - React Hooks
   - JavaScript
   - HTML
   - CSS
-  - Async/Await 
+
