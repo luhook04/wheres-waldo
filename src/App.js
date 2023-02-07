@@ -1,147 +1,137 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import StartGameModal from "./components/StartGameModal";
-import EndGameModal from "./components/EndGameModal";
-import Header from "./components/Header";
-import GameContainer from "./components/GameContainer";
-import Leaderboard from "./components/Leaderboard";
-import Feedback from "./components/Feedback";
-import odlawPic from "./imgs/odlaw.jpeg";
-import waldoPic from "./imgs/waldocharacter.jpeg";
-import wendaPic from "./imgs/wenda.jpeg";
-import whiteBeardPic from "./imgs/whitebeard.jpeg";
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import StartGameModal from './components/StartGameModal';
+import EndGameModal from './components/EndGameModal';
+import Header from './components/Header';
+import GameContainer from './components/GameContainer';
+import Leaderboard from './components/Leaderboard';
+import Feedback from './components/Feedback';
+import odlawPic from './imgs/odlaw.jpeg';
+import waldoPic from './imgs/waldocharacter.jpeg';
+import wendaPic from './imgs/wenda.jpeg';
+import whiteBeardPic from './imgs/whitebeard.jpeg';
 import {
   addDoc,
   collection,
   serverTimestamp,
   doc,
   updateDoc,
-  getDoc
-} from "firebase/firestore";
-import { db } from "./firebase/firebase.config";
+  getDoc,
+} from 'firebase/firestore';
+import { db } from './firebase/firebase.config';
 
 const App = () => {
-  const [ showStartModal, setShowStartModal ] = useState(true);
-  const [ startGame, setStartGame ] = useState(false);
-  const [ showLeaderboard, setShowLeaderboard ] = useState(false);
-  const [ endGameModal, setEndGameModal ] = useState(false);
-  const [ errorPopup, setErrorPopup ] = useState(false);
-  const [ errorMessage, setErrorMessage ] = useState("");
-  const [ successPopup, setSuccessPopup ] = useState(false);
-  const [ successMessage, setSuccessMessage ] = useState("");
-  const [ username, setUsername ] = useState("");
-  const [ userId, setUserId ] = useState("");
-  const [ gameResult, setGameResult ] = useState();
-  const [ mousePosition, setMousePosition ] = useState({ x: 0, y: 0 });
-  const [ modalInformation, setmodalInformation ] = useState({
-    x    : 0,
-    y    : 0,
-    show : false
+  const [showStartModal, setShowStartModal] = useState(true);
+  const [startGame, setStartGame] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [endGameModal, setEndGameModal] = useState(false);
+  const [errorPopup, setErrorPopup] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successPopup, setSuccessPopup] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState('');
+  const [gameResult, setGameResult] = useState();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [modalInformation, setmodalInformation] = useState({
+    x: 0,
+    y: 0,
+    show: false,
   });
-  const [ remainingCharacters, setRemainingCharacters ] = useState([
+  const [remainingCharacters, setRemainingCharacters] = useState([
     {
-      name  : "Waldo",
-      image : waldoPic
+      name: 'Waldo',
+      image: waldoPic,
     },
     {
-      name  : "Odlaw",
-      image : odlawPic
+      name: 'Odlaw',
+      image: odlawPic,
     },
     {
-      name  : "Wenda",
-      image : wendaPic
+      name: 'Wenda',
+      image: wendaPic,
     },
     {
-      name  : "Whitebeard",
-      image : whiteBeardPic
-    }
+      name: 'Whitebeard',
+      image: whiteBeardPic,
+    },
   ]);
 
   const characterPos = {
-    Waldo      : "SzcX1kUhIspzXiLf0m0D",
-    Odlaw      : "xQSTsPX254yZr1ewpWoU",
-    Wenda      : "Phpjg7dfgLQnzaylEnL4",
-    Whitebeard : "GLodc7DOiU3qd0nMroYg"
+    Waldo: 'SzcX1kUhIspzXiLf0m0D',
+    Odlaw: 'xQSTsPX254yZr1ewpWoU',
+    Wenda: 'Phpjg7dfgLQnzaylEnL4',
+    Whitebeard: 'GLodc7DOiU3qd0nMroYg',
   };
 
-  useEffect(
-    () => {
-      const endGame = async () => {
-        await setEndTime();
+  useEffect(() => {
+    const endGame = async () => {
+      await setEndTime();
 
-        const userRef = doc(db, "timing", userId);
-        const userDoc = await getDoc(userRef).then((res) => res.data());
-        const { startTime, endTime, username } = userDoc;
-        const secondsTaken = Math.round(endTime - startTime);
-        setGameResult({ username, secondsTaken });
-        setEndGameModal(true);
-        setStartGame(false);
-      };
+      const userRef = doc(db, 'timing', userId);
+      const userDoc = await getDoc(userRef).then((res) => res.data());
+      const { startTime, endTime, username } = userDoc;
+      const secondsTaken = Math.round(endTime - startTime);
+      setGameResult({ username, secondsTaken });
+      setEndGameModal(true);
+      setStartGame(false);
+    };
 
-      const setEndTime = async () => {
-        const userRef = doc(db, "timing", userId);
-        await updateDoc(userRef, {
-          endTime : serverTimestamp()
-        })
-          .then(() => console.log("woo"))
-          .catch((err) => console.log(err));
-      };
+    const setEndTime = async () => {
+      const userRef = doc(db, 'timing', userId);
+      await updateDoc(userRef, {
+        endTime: serverTimestamp(),
+      })
+        .then(() => console.log('success'))
+        .catch((err) => console.log(err));
+    };
 
-      if (remainingCharacters.length === 0) {
-        console.log("Game Over!");
-        endGame();
-      }
-    },
-    [ remainingCharacters, userId ]
-  );
+    if (remainingCharacters.length === 0) {
+      endGame();
+    }
+  }, [remainingCharacters, userId]);
 
-  useEffect(
-    () => {
-      if (errorPopup) {
-        setTimeout(() => {
-          setErrorPopup(false);
-        }, 1000);
-      }
-    },
-    [ errorPopup ]
-  );
+  useEffect(() => {
+    if (errorPopup) {
+      setTimeout(() => {
+        setErrorPopup(false);
+      }, 1000);
+    }
+  }, [errorPopup]);
 
-  useEffect(
-    () => {
-      if (successPopup) {
-        setTimeout(() => {
-          setSuccessPopup(false);
-        }, 1000);
-      }
-    },
-    [ successPopup ]
-  );
+  useEffect(() => {
+    if (successPopup) {
+      setTimeout(() => {
+        setSuccessPopup(false);
+      }, 1000);
+    }
+  }, [successPopup]);
 
   const updateName = (e) => {
     setUsername(e.target.value);
   };
 
   const resetGame = () => {
-    setUserId("");
+    setUserId('');
     setGameResult();
-    setUsername("");
+    setUsername('');
     setRemainingCharacters([
       {
-        name  : "Waldo",
-        image : waldoPic
+        name: 'Waldo',
+        image: waldoPic,
       },
       {
-        name  : "Odlaw",
-        image : odlawPic
+        name: 'Odlaw',
+        image: odlawPic,
       },
       {
-        name  : "Wenda",
-        image : wendaPic
+        name: 'Wenda',
+        image: wendaPic,
       },
       {
-        name  : "Whitebeard",
-        image : whiteBeardPic
-      }
+        name: 'Whitebeard',
+        image: whiteBeardPic,
+      },
     ]);
     handleHomeClick();
   };
@@ -149,17 +139,17 @@ const App = () => {
   const getCoords = (e) => {
     const { width, height } = e.target.getBoundingClientRect();
     const { offsetX, offsetY } = e.nativeEvent;
-    const xCoords = Math.round(offsetX / width * 100);
-    const yCoords = Math.round(offsetY / height * 100);
-    console.log({ x: xCoords, y: yCoords });
+    const xCoords = Math.round((offsetX / width) * 100);
+    const yCoords = Math.round((offsetY / height) * 100);
+
     setMousePosition({ x: xCoords, y: yCoords });
   };
 
   const getModalInfo = (e) => {
     setmodalInformation({
-      x    : e.pageX,
-      y    : e.pageY,
-      show : !modalInformation.show
+      x: e.pageX,
+      y: e.pageY,
+      show: !modalInformation.show,
     });
   };
 
@@ -190,11 +180,11 @@ const App = () => {
   const checkPosition = async (e) => {
     const name = e.target.firstChild.textContent;
     const characterId = characterPos[name];
-    const characterRef = doc(db, "locations", characterId);
+    const characterRef = doc(db, 'locations', characterId);
     const charSnapshot = await getDoc(characterRef);
-    const [ x, y ] = [
-      charSnapshot.data()["x-cord"],
-      charSnapshot.data()["y-cord"]
+    const [x, y] = [
+      charSnapshot.data()['x-cord'],
+      charSnapshot.data()['y-cord'],
     ];
     isInArea(x, y) ? foundCharacter(name) : wrongSelection(name);
   };
@@ -203,7 +193,7 @@ const App = () => {
     const distance = Math.sqrt(
       (mousePosition.x - xCord) ** 2 + (mousePosition.y - yCord) ** 2
     );
-    return distance < 8 ? true : false;
+    return distance < 7 ? true : false;
   };
 
   const foundCharacter = (character) => {
@@ -224,7 +214,7 @@ const App = () => {
 
   const toggleStartGame = () => {
     if (username.length < 3 || username.length > 15) {
-      alert("You must enter a username between 3-15 letters");
+      alert('You must enter a username between 3-15 letters');
       return;
     }
     setShowStartModal(!showStartModal);
@@ -233,14 +223,14 @@ const App = () => {
   };
 
   const timeUser = async () => {
-    addDoc(collection(db, "timing"), {
-      username  : username,
-      startTime : serverTimestamp(),
-      endTime   : null
+    addDoc(collection(db, 'timing'), {
+      username: username,
+      startTime: serverTimestamp(),
+      endTime: null,
     })
       .then((res) => {
         setUserId(res.id);
-        console.log("timer started");
+        console.log('timer started');
       })
       .catch((err) => console.log(err));
   };

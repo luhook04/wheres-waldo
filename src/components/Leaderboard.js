@@ -3,7 +3,7 @@ import { query, collection, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase.config";
 
 const Leaderboard = ({ resetGame }) => {
-  const [ leaderboard, setLeaderboard ] = useState([]);
+  const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
     const getLeaderboard = async () => {
@@ -16,8 +16,8 @@ const Leaderboard = ({ resetGame }) => {
       resultDocs.forEach((doc) => {
         const { username, endTime, startTime } = doc.data();
         resultsArray.push({
-          username  : username,
-          timeTaken : (endTime - startTime).toFixed(2)
+          username: username,
+          timeTaken: (endTime - startTime).toFixed(2),
         });
       });
       const timesArray = resultsArray.sort(

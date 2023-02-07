@@ -9,7 +9,7 @@ const Feedback = ({
   mousePosition
 }) => {
   return (
-    <div>
+    <div className="feedback-container">
       {successPopup && mousePosition.x >= 92 ? (
         <div
           style={{

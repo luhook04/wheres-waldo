@@ -181,3 +181,35 @@ table {
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
+
+@media (max-width: 850px) {
+  .remaining-character-grid {
+    width: 80%;
+    font-size: 2vw;
+  }
+
+  .leaderboard-container {
+    width: 90%;
+  }
+
+  th {
+    font-size: 3vw;
+  }
+
+  .selection-container {
+    font-size: 1vw;
+  }
+
+  .feedback {
+    padding: 1vw;
+    font-size: 1vw;
+  }
+
+  .end-modal {
+    width: 95%;
+  }
+
+  .feedback-container {
+    width: fit-content;
+  }
+}
