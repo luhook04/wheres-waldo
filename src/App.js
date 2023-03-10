@@ -193,7 +193,7 @@ const App = () => {
     const distance = Math.sqrt(
       (mousePosition.x - xCord) ** 2 + (mousePosition.y - yCord) ** 2
     );
-    return distance < 7 ? true : false;
+    return distance < 6 ? true : false;
   };
 
   const foundCharacter = (character) => {

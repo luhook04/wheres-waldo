@@ -187,6 +187,9 @@ table {
     width: 80%;
     font-size: 2vw;
   }
+  .gameboard {
+    cursor: url('./imgs/small-cursor.svg') 30 30, auto;
+  }
 
   .leaderboard-container {
     width: 90%;
